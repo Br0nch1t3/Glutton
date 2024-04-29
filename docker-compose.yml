@@ -1,0 +1,59 @@
+version: "3"
+
+services:
+  vizualizer:
+    container_name: glutton-vizualizer
+    image: grafana/grafana-oss
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+  scrapper:
+    container_name: glutton-scrapper
+    image: glutton_scrapper
+    command: npm run dev > app.log 2>&1
+    build:
+      context: ./scrapper
+    volumes:
+      - ./scrapper:/source
+    ports:
+      - 3001:3001
+    depends_on:
+      builder:
+        condition: service_healthy
+  builder:
+    container_name: glutton-builder
+    image: glutton_builder
+    build:
+      context: ./builder
+    command: air
+    ports:
+      - "3002:3002"
+    depends_on:
+      - db
+    links:
+      - db
+
+    volumes:
+      - ./builder:/opt/app/api
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3002/health"]
+      interval: 60s
+      timeout: 30s
+      retries: 5
+      start_period: 10s
+  db:
+    container_name: glutton-db
+    image: influxdb:2.0
+    ports:
+      - 8086:8086
+    volumes:
+      - ./builder/db/config.yml:/etc/influxdb2/config.yml
+    env_file:
+      - path: ./builder/db/.env
+
+volumes:
+  grafana-storage: {}

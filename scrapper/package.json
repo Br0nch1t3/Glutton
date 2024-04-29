@@ -1,0 +1,43 @@
+{
+  "name": "scrapper",
+  "version": "1.0.0",
+  "description": "Scraps RSS feed",
+  "main": "index.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "node dist/index.js",
+    "dev": "concurrently \"npx tsc --watch --preserveWatchOutput\" \"nodemon -q dist/index.js\"",
+    "prettier:check": "prettier --config .prettierrc --check \"./**/*.{css,scss,json,md,ts,tsx,js,jsx}\"",
+    "prettier": "prettier --write --config .prettierrc \"./**/*.{css,scss,json,md,ts,tsx,js,jsx}\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.5.1",
+    "dayjs": "^1.11.10",
+    "dotenv": "^16.4.1",
+    "events": "^3.3.0",
+    "express": "^4.18.2",
+    "jquery": "^3.7.1",
+    "jsdom": "^22.1.0",
+    "selenium-webdriver": "^4.17.0",
+    "xml2json": "^0.12.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.19",
+    "@types/jquery": "^3.5.25",
+    "@types/jsdom": "^21.1.4",
+    "@types/node": "^20.8.4",
+    "@types/selenium-webdriver": "^4.1.21",
+    "@types/xml2json": "^0.11.4",
+    "concurrently": "^8.2.1",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.2.5",
+    "typescript": "^5.2.2"
+  },
+  "eslintConfig": {
+    "rules": {
+      "require-jsdoc": "off"
+    }
+  }
+}

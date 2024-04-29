@@ -1,0 +1,7 @@
+dist
+.parcel-cache
+node_modules
+tmp
+app.env.json
+go.sum
+init.sql
